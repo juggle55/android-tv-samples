@@ -43,13 +43,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.okhttp.OkHttpDataSource.Factory
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.PlayerView
 import com.google.jetstream.data.entities.MovieDetails
 import com.google.jetstream.data.util.StringConstants
@@ -71,6 +74,7 @@ import com.google.jetstream.presentation.screens.videoPlayer.components.remember
 import com.google.jetstream.presentation.utils.handleDPadKeyEvents
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
+import okhttp3.OkHttpClient
 
 object VideoPlayerScreen {
     const val MovieIdBundleKey = "movieId"
@@ -117,7 +121,7 @@ fun VideoPlayerScreenContent(movieDetails: MovieDetails, onBackPressed: () -> Un
     LaunchedEffect(exoPlayer, movieDetails) {
         exoPlayer.setMediaItem(
             MediaItem.Builder()
-                .setUri(movieDetails.videoUri)
+                .setUri("movieDetails.videoUri")
                 .setSubtitleConfigurations(
                     if (movieDetails.subtitleUri == null) {
                         emptyList()
@@ -267,12 +271,50 @@ fun VideoPlayerControls(
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
 private fun rememberExoPlayer(context: Context) = remember {
+//    ExoPlayer.Builder(context)
+//        .setSeekForwardIncrementMs(10)
+//        .setSeekBackIncrementMs(10)
+//        .setMediaSourceFactory(
+//            ProgressiveMediaSource.Factory(DefaultDataSource.Factory(context))
+//        )
+//        .setVideoScalingMode(C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
+//        .build()
+//        .apply {
+//            playWhenReady = true
+//            //repeatMode = Player.REPEAT_MODE_ONE
+//        }
+    val httpClient = OkHttpClient()
+
+    // quality selection
+//    val trackSelector = DefaultTrackSelector(context).also {
+//        it.setParameters(
+//            it
+//                .buildUponParameters()
+//                .setPreferredAudioLanguage("deu")
+//                .setPreferredTextLanguageAndRoleFlagsToCaptioningManagerSettings(context)
+//                .setSelectUndeterminedTextLanguage(true)
+//                .setIgnoredTextSelectionFlags(C.SELECTION_FLAG_DEFAULT)
+//                .clearVideoSizeConstraints()
+//                .setForceLowestBitrate(false)
+//        )
+//    }
+
+//    val audioAttributes = AudioAttributes.Builder()
+//        .setUsage(C.USAGE_MEDIA)
+//        .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+//        .build()
+
+    // use okhttp as network stack
+    val dataSourceFactory = DefaultDataSource.Factory(
+        context,
+        Factory(httpClient)
+    )
     ExoPlayer.Builder(context)
         .setSeekForwardIncrementMs(10)
         .setSeekBackIncrementMs(10)
-        .setMediaSourceFactory(
-            ProgressiveMediaSource.Factory(DefaultDataSource.Factory(context))
-        )
+//        .setTrackSelector(trackSelector)
+//        .setAudioAttributes(audioAttributes, true)
+        .setMediaSourceFactory(DefaultMediaSourceFactory(dataSourceFactory))
         .setVideoScalingMode(C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
         .build()
         .apply {

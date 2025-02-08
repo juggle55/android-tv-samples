@@ -22,6 +22,8 @@ navigation-compose = "2.8.5"
 profileinstaller = "1.4.1"
 uiautomator = "2.3.0"
 rules = "1.6.1"
+media3-exoplayer-hls = "1.5.1"
+media3-datasource-okhttp = "1.5.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -48,6 +50,8 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-android" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
+androidx-media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exoplayer-hls", version.ref = "media3-exoplayer-hls" }
+androidx-media3-datasource-okhttp = { group = "androidx.media3", name = "media3-datasource-okhttp", version.ref = "media3-datasource-okhttp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
