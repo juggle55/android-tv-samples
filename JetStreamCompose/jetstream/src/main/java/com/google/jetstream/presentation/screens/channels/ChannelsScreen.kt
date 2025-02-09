@@ -1,9 +1,10 @@
+package com.google.jetstream.presentation.screens.channels
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -20,14 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,10 +34,10 @@ import com.google.jetstream.data.entities.Channel
 import com.google.jetstream.data.entities.ChannelList
 import com.google.jetstream.presentation.common.Loading
 import com.google.jetstream.presentation.common.MovieCard
-import com.google.jetstream.presentation.common.PosterImage
 import com.google.jetstream.presentation.screens.channels.ChannelsScreenUiState
 import com.google.jetstream.presentation.screens.channels.ChannelsScreenViewModel
 import com.google.jetstream.presentation.screens.dashboard.rememberChildPadding
+import com.google.jetstream.presentation.screens.videoPlayer.VideoPlayerScreen
 import com.google.jetstream.presentation.utils.GradientBg
 
 @Composable
@@ -48,10 +45,10 @@ fun ChannelsScreen(
     gridColumns: Int = 4,
     goToVideoPlayer: (channel: Channel) -> Unit,
     onScroll: (isTopBarVisible: Boolean) -> Unit,
-    categoriesScreenViewModel: ChannelsScreenViewModel = hiltViewModel()
+    channelsScreenViewModel: ChannelsScreenViewModel = hiltViewModel()
 ) {
 
-    val uiState by categoriesScreenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by channelsScreenViewModel.uiState.collectAsStateWithLifecycle()
 
     when (val s = uiState) {
         ChannelsScreenUiState.Loading -> {
@@ -76,7 +73,7 @@ private fun Catalog(
     channels: ChannelList,
     modifier: Modifier = Modifier,
     gridColumns: Int = 4,
-    goToVideoPlayer: (movie: Channel) -> Unit,
+    goToVideoPlayer: (channel: Channel) -> Unit,
     onScroll: (isTopBarVisible: Boolean) -> Unit,
 ) {
     val childPadding = rememberChildPadding()
@@ -119,56 +116,8 @@ private fun Catalog(
                             if (index % gridColumns == 0) {
                                 left = FocusRequester.Cancel
                             }
-                        },
-                    title = {channel.name},
-                    //image = {channel.posterUri}
+                        }
                 ) {
-//                    Box(contentAlignment = Alignment.CenterStart) {
-//                        val textColor = if (isFocused) Color.White else Color.White
-//                        val itemAlpha by animateFloatAsState(
-//                            targetValue = if (isFocused) .6f else 0.2f,
-//                            label = ""
-//                        )
-//                        Box(modifier = Modifier.alpha(itemAlpha)) {
-//                            GradientBg()
-//                        }
-//                        Text(
-//                            text = channel.name,
-//                            style = MaterialTheme.typography.titleMedium.copy(
-//                                color = textColor,
-//                            )
-//                        )
-//                        PosterImage(
-//                            movie = channel,
-//                            modifier = modifier
-//                                .fillMaxWidth()
-//                                .drawWithContent {
-//                                    drawContent()
-//                                    if (showIndexOverImage) {
-//                                        drawRect(
-//                                            color = Color.Black.copy(
-//                                                alpha = 0.1f
-//                                            )
-//                                        )
-//                                    }
-//                                },
-//                        )
-//                        if (showIndexOverImage) {
-//                            Text(
-//                                modifier = Modifier.padding(16.dp),
-//                                text = "#${index.inc()}",
-//                                style = MaterialTheme.typography.displayLarge
-//                                    .copy(
-//                                        shadow = Shadow(
-//                                            offset = Offset(0.5f, 0.5f),
-//                                            blurRadius = 5f
-//                                        ),
-//                                        color = Color.White
-//                                    ),
-//                                fontWeight = FontWeight.SemiBold
-//                            )
-//                        }
-
                     val itemAlpha by animateFloatAsState(
                         targetValue = if (isFocused) .6f else 0.2f,
                         label = ""

@@ -16,12 +16,14 @@
 
 package com.google.jetstream.data.repositories
 
+import com.google.jetstream.data.entities.Channel
 import com.google.jetstream.data.entities.ChannelList
 import com.google.jetstream.data.entities.MovieCategoryDetails
 import com.google.jetstream.data.entities.MovieDetails
 import com.google.jetstream.data.entities.MovieList
 import com.google.jetstream.data.entities.MovieReviewsAndRatings
 import com.google.jetstream.data.entities.ThumbnailType
+import com.google.jetstream.data.entities.Video
 import com.google.jetstream.data.util.StringConstants
 import com.google.jetstream.data.util.StringConstants.Movie.Reviewer.DefaultCount
 import com.google.jetstream.data.util.StringConstants.Movie.Reviewer.DefaultRating
@@ -161,5 +163,16 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getChannels(): Flow<ChannelList> = flow {
         val list = channelDataSource.getChannels()
         emit(list)
+    }
+
+    override suspend fun getVideo(id: String): Channel {
+        val channels = channelDataSource.getChannels()
+        val channel = channels.find { it.id == id } ?: channels.first()
+
+        return Channel(
+            id = channel.id,
+            name = channel.name,
+            videoUri = channel.videoUri
+        )
     }
 }

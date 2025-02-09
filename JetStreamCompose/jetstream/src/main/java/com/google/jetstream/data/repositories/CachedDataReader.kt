@@ -76,7 +76,7 @@ internal suspend fun readMovieCategoryData(
     }.getOrDefault(emptyList())
 }
 
-internal typealias ChannelDataReader = CachedDataReader<Channel>
+// internal typealias ChannelDataReader = CachedDataReader<Channel>
 
 internal suspend fun readChannelData(
     assetsReader: AssetsReader,

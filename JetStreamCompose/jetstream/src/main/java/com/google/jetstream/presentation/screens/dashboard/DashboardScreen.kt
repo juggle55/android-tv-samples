@@ -16,7 +16,6 @@
 
 package com.google.jetstream.presentation.screens.dashboard
 
-import ChannelsScreen
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
@@ -62,6 +61,7 @@ import com.google.jetstream.data.entities.Movie
 import com.google.jetstream.data.entities.Video
 import com.google.jetstream.presentation.screens.Screens
 import com.google.jetstream.presentation.screens.categories.CategoriesScreen
+import com.google.jetstream.presentation.screens.channels.ChannelsScreen
 import com.google.jetstream.presentation.screens.profile.ProfileScreen
 import com.google.jetstream.presentation.screens.search.SearchScreen
 import com.google.jetstream.presentation.screens.shows.ShowsScreen
@@ -85,7 +85,7 @@ fun rememberChildPadding(direction: LayoutDirection = LocalLayoutDirection.curre
 fun DashboardScreen(
     openCategoryMovieList: (categoryId: String) -> Unit,
     openMovieDetailsScreen: (movieId: String) -> Unit,
-    openVideoPlayer: (Video) -> Unit,
+    openVideoPlayer: (videoId: String) -> Unit,
     isComingBackFromDifferentScreen: Boolean,
     resetIsComingBackFromDifferentScreen: () -> Unit,
     onBackPressed: () -> Unit
@@ -222,7 +222,7 @@ private fun BackPressHandledArea(
 private fun Body(
     openCategoryMovieList: (categoryId: String) -> Unit,
     openMovieDetailsScreen: (movieId: String) -> Unit,
-    openVideoPlayer: (Video) -> Unit,
+    openVideoPlayer: (videoId: String) -> Unit,
     updateTopBarVisibility: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
@@ -231,7 +231,7 @@ private fun Body(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Screens.Channels(),
+        startDestination = Screens.Categories(),
 //        startDestination = Screens.Home(),
     ) {
         composable(Screens.Profile()) {
@@ -249,7 +249,7 @@ private fun Body(
 //        }
         composable(Screens.Channels()) {
             ChannelsScreen(
-                goToVideoPlayer = openVideoPlayer,
+                goToVideoPlayer = {channel -> openVideoPlayer(channel.id)},
                 onScroll = updateTopBarVisibility
             )
         }

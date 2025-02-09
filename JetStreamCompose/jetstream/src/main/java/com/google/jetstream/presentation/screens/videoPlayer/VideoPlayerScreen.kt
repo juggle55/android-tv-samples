@@ -17,7 +17,6 @@
 package com.google.jetstream.presentation.screens.videoPlayer
 
 import android.content.Context
-import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
@@ -54,7 +53,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.PlayerView
-import com.google.jetstream.data.entities.MovieDetails
 import com.google.jetstream.data.entities.Video
 import com.google.jetstream.data.util.StringConstants
 import com.google.jetstream.presentation.common.Error
@@ -78,7 +76,7 @@ import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 
 object VideoPlayerScreen {
-    const val MovieIdBundleKey = "movieId"
+    const val MovieIdBundleKey = "videoId"
 }
 
 /**
@@ -104,7 +102,7 @@ fun VideoPlayerScreen(
         }
         is VideoPlayerScreenUiState.Done -> {
             VideoPlayerScreenContent(
-                movieDetails = s.movieDetails,
+                video = s.video,
                 onBackPressed = onBackPressed
             )
         }
@@ -113,16 +111,16 @@ fun VideoPlayerScreen(
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-fun VideoPlayerScreenContent(movieDetails: MovieDetails, onBackPressed: () -> Unit) {
+fun VideoPlayerScreenContent(video: Video, onBackPressed: () -> Unit) {
     val context = LocalContext.current
     val videoPlayerState = rememberVideoPlayerState(hideSeconds = 4)
 
     // TODO: Move to ViewModel for better reuse
     val exoPlayer = rememberExoPlayer(context)
-    LaunchedEffect(exoPlayer, movieDetails) {
+    LaunchedEffect(exoPlayer, video) {
         exoPlayer.setMediaItem(
             MediaItem.Builder()
-                .setUri(movieDetails.videoUri)
+                .setUri(video.videoUri)
 //                .setSubtitleConfigurations(
 //                    if (movieDetails.subtitleUri == null) {
 //                        emptyList()
@@ -184,7 +182,7 @@ fun VideoPlayerScreenContent(movieDetails: MovieDetails, onBackPressed: () -> Un
             subtitles = { /* TODO Implement subtitles */ },
             controls = {
                 VideoPlayerControls(
-                    movieDetails,
+                    video,
                     isPlaying,
                     contentCurrentPosition,
                     exoPlayer,
@@ -198,7 +196,7 @@ fun VideoPlayerScreenContent(movieDetails: MovieDetails, onBackPressed: () -> Un
 
 @Composable
 fun VideoPlayerControls(
-    movieDetails: MovieDetails,
+    video: Video,
     isPlaying: Boolean,
     contentCurrentPosition: Long,
     exoPlayer: ExoPlayer,
@@ -216,9 +214,11 @@ fun VideoPlayerControls(
     VideoPlayerMainFrame(
         mediaTitle = {
             VideoPlayerMediaTitle(
-                title = movieDetails.name,
-                secondaryText = movieDetails.releaseDate,
-                tertiaryText = movieDetails.director,
+                title = video.name,
+//                secondaryText = video.releaseDate,
+//                tertiaryText = video.director,
+                secondaryText = "",
+                tertiaryText = "",
                 type = VideoPlayerMediaTitleType.DEFAULT
             )
         },
@@ -288,23 +288,23 @@ private fun rememberExoPlayer(context: Context) = remember {
     val httpClient = OkHttpClient()
 
     // quality selection
-//    val trackSelector = DefaultTrackSelector(context).also {
-//        it.setParameters(
-//            it
-//                .buildUponParameters()
-//                .setPreferredAudioLanguage("deu")
-//                .setPreferredTextLanguageAndRoleFlagsToCaptioningManagerSettings(context)
-//                .setSelectUndeterminedTextLanguage(true)
-//                .setIgnoredTextSelectionFlags(C.SELECTION_FLAG_DEFAULT)
-//                .clearVideoSizeConstraints()
-//                .setForceLowestBitrate(false)
-//        )
-//    }
+    val trackSelector = DefaultTrackSelector(context).also {
+        it.setParameters(
+            it
+                .buildUponParameters()
+                .setPreferredAudioLanguage("deu")
+                .setPreferredTextLanguageAndRoleFlagsToCaptioningManagerSettings(context)
+                .setSelectUndeterminedTextLanguage(true)
+                .setIgnoredTextSelectionFlags(C.SELECTION_FLAG_DEFAULT)
+                .clearVideoSizeConstraints()
+                .setForceLowestBitrate(false)
+        )
+    }
 
-//    val audioAttributes = AudioAttributes.Builder()
-//        .setUsage(C.USAGE_MEDIA)
-//        .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
-//        .build()
+    val audioAttributes = AudioAttributes.Builder()
+        .setUsage(C.USAGE_MEDIA)
+        .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+        .build()
 
     // use okhttp as network stack
     val dataSourceFactory = DefaultDataSource.Factory(
@@ -314,8 +314,8 @@ private fun rememberExoPlayer(context: Context) = remember {
     ExoPlayer.Builder(context)
         .setSeekForwardIncrementMs(10)
         .setSeekBackIncrementMs(10)
-//        .setTrackSelector(trackSelector)
-//        .setAudioAttributes(audioAttributes, true)
+        .setTrackSelector(trackSelector)
+        .setAudioAttributes(audioAttributes, true)
         .setMediaSourceFactory(DefaultMediaSourceFactory(dataSourceFactory))
         .setVideoScalingMode(C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
         .build()

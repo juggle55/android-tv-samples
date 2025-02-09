@@ -20,7 +20,7 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.jetstream.data.entities.MovieDetails
+import com.google.jetstream.data.entities.Video
 import com.google.jetstream.data.repositories.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -39,8 +39,8 @@ class VideoPlayerScreenViewModel @Inject constructor(
             if (id == null) {
                 VideoPlayerScreenUiState.Error
             } else {
-                val details = repository.getMovieDetails(movieId = id)
-                VideoPlayerScreenUiState.Done(movieDetails = details)
+                val details = repository.getVideo(id = id)
+                VideoPlayerScreenUiState.Done(video = details)
             }
         }.stateIn(
             scope = viewModelScope,
@@ -53,5 +53,5 @@ class VideoPlayerScreenViewModel @Inject constructor(
 sealed class VideoPlayerScreenUiState {
     object Loading : VideoPlayerScreenUiState()
     object Error : VideoPlayerScreenUiState()
-    data class Done(val movieDetails: MovieDetails) : VideoPlayerScreenUiState()
+    data class Done(val video: Video) : VideoPlayerScreenUiState()
 }
