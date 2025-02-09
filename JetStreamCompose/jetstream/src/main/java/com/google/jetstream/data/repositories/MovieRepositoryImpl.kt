@@ -16,6 +16,7 @@
 
 package com.google.jetstream.data.repositories
 
+import com.google.jetstream.data.entities.ChannelList
 import com.google.jetstream.data.entities.MovieCategoryDetails
 import com.google.jetstream.data.entities.MovieDetails
 import com.google.jetstream.data.entities.MovieList
@@ -37,6 +38,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val tvDataSource: TvDataSource,
     private val movieCastDataSource: MovieCastDataSource,
     private val movieCategoryDataSource: MovieCategoryDataSource,
+    private val channelDataSource: ChannelDataSource
 ) : MovieRepository {
 
     override fun getFeaturedMovies() = flow {
@@ -153,6 +155,11 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getFavouriteMovies(): Flow<MovieList> = flow {
         val list = movieDataSource.getFavoriteMovieList()
+        emit(list)
+    }
+
+    override fun getChannels(): Flow<ChannelList> = flow {
+        val list = channelDataSource.getChannels()
         emit(list)
     }
 }

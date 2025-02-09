@@ -16,6 +16,7 @@
 
 package com.google.jetstream.presentation.screens.dashboard
 
+import ChannelsScreen
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
@@ -56,12 +57,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.jetstream.data.entities.Channel
 import com.google.jetstream.data.entities.Movie
+import com.google.jetstream.data.entities.Video
 import com.google.jetstream.presentation.screens.Screens
 import com.google.jetstream.presentation.screens.categories.CategoriesScreen
-import com.google.jetstream.presentation.screens.favourites.FavouritesScreen
-import com.google.jetstream.presentation.screens.home.HomeScreen
-import com.google.jetstream.presentation.screens.movies.MoviesScreen
 import com.google.jetstream.presentation.screens.profile.ProfileScreen
 import com.google.jetstream.presentation.screens.search.SearchScreen
 import com.google.jetstream.presentation.screens.shows.ShowsScreen
@@ -85,7 +85,7 @@ fun rememberChildPadding(direction: LayoutDirection = LocalLayoutDirection.curre
 fun DashboardScreen(
     openCategoryMovieList: (categoryId: String) -> Unit,
     openMovieDetailsScreen: (movieId: String) -> Unit,
-    openVideoPlayer: (Movie) -> Unit,
+    openVideoPlayer: (Video) -> Unit,
     isComingBackFromDifferentScreen: Boolean,
     resetIsComingBackFromDifferentScreen: () -> Unit,
     onBackPressed: () -> Unit
@@ -222,7 +222,7 @@ private fun BackPressHandledArea(
 private fun Body(
     openCategoryMovieList: (categoryId: String) -> Unit,
     openMovieDetailsScreen: (movieId: String) -> Unit,
-    openVideoPlayer: (Movie) -> Unit,
+    openVideoPlayer: (Video) -> Unit,
     updateTopBarVisibility: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
@@ -231,34 +231,42 @@ private fun Body(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Screens.Home(),
+        startDestination = Screens.Channels(),
+//        startDestination = Screens.Home(),
     ) {
         composable(Screens.Profile()) {
             ProfileScreen()
         }
-        composable(Screens.Home()) {
-            HomeScreen(
-                onMovieClick = { selectedMovie ->
-                    openMovieDetailsScreen(selectedMovie.id)
-                },
+//        composable(Screens.Home()) {
+//            HomeScreen(
+//                onMovieClick = { selectedMovie ->
+//                    openMovieDetailsScreen(selectedMovie.id)
+//                },
+//                goToVideoPlayer = openVideoPlayer,
+//                onScroll = updateTopBarVisibility,
+//                isTopBarVisible = isTopBarVisible
+//            )
+//        }
+        composable(Screens.Channels()) {
+            ChannelsScreen(
                 goToVideoPlayer = openVideoPlayer,
-                onScroll = updateTopBarVisibility,
-                isTopBarVisible = isTopBarVisible
+                onScroll = updateTopBarVisibility
             )
         }
+
         composable(Screens.Categories()) {
             CategoriesScreen(
                 onCategoryClick = openCategoryMovieList,
                 onScroll = updateTopBarVisibility
             )
         }
-        composable(Screens.Movies()) {
-            MoviesScreen(
-                onMovieClick = { movie -> openMovieDetailsScreen(movie.id) },
-                onScroll = updateTopBarVisibility,
-                isTopBarVisible = isTopBarVisible
-            )
-        }
+//        composable(Screens.Movies()) {
+//            MoviesScreen(
+//                onMovieClick = { movie -> openMovieDetailsScreen(movie.id) },
+//                onScroll = updateTopBarVisibility,
+//                isTopBarVisible = isTopBarVisible
+//            )
+//        }
         composable(Screens.Shows()) {
             ShowsScreen(
                 onTVShowClick = { movie -> openMovieDetailsScreen(movie.id) },
@@ -266,13 +274,13 @@ private fun Body(
                 isTopBarVisible = isTopBarVisible
             )
         }
-        composable(Screens.Favourites()) {
-            FavouritesScreen(
-                onMovieClick = openMovieDetailsScreen,
-                onScroll = updateTopBarVisibility,
-                isTopBarVisible = isTopBarVisible
-            )
-        }
+//        composable(Screens.Favourites()) {
+//            FavouritesScreen(
+//                onMovieClick = openMovieDetailsScreen,
+//                onScroll = updateTopBarVisibility,
+//                isTopBarVisible = isTopBarVisible
+//            )
+//        }
         composable(Screens.Search()) {
             SearchScreen(
                 onMovieClick = { movie -> openMovieDetailsScreen(movie.id) },

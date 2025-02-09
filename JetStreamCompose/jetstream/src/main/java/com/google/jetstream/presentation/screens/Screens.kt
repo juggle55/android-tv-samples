@@ -29,11 +29,12 @@ enum class Screens(
     val tabIcon: ImageVector? = null
 ) {
     Profile,
-    Home(isTabItem = true),
+//    Home(isTabItem = true),
+    Channels(isTabItem = true),
     Categories(isTabItem = true),
-    Movies(isTabItem = true),
+//    Movies(isTabItem = true),
     Shows(isTabItem = true),
-    Favourites(isTabItem = true),
+//    Favourites(isTabItem = true),
     Search(isTabItem = true, tabIcon = Icons.Default.Search),
     CategoryMovieList(listOf(CategoryMovieListScreen.CategoryIdBundleKey)),
     MovieDetails(listOf(MovieDetailsScreen.MovieIdBundleKey)),

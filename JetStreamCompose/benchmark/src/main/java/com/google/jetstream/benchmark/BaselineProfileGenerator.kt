@@ -35,10 +35,10 @@ class BaselineProfileGenerator {
 
         device.run {
             // Wait until screen loads and Carousel gains focus
-            wait(
-                Until.findObject(By.descContains(CAROUSEL_DESCRIPTION).focused(true)),
-                INITIAL_WAIT_TIMEOUT
-            )
+//            wait(
+//                Until.findObject(By.descContains(CAROUSEL_DESCRIPTION).focused(true)),
+//                INITIAL_WAIT_TIMEOUT
+//            )
 
             // Explore the Home tab
             repeat(2) { pressDPadRight(); waitForIdle(WAIT_TIMEOUT) }
@@ -64,30 +64,41 @@ class BaselineProfileGenerator {
                 WAIT_TIMEOUT
             )
 
+            // Navigate to Channels tab
+            pressDPadUp()
+            waitForIdle()
+            pressDPadRight()
+            waitForIdle()
+            wait(
+                Until.findObject(By.text(CHANNELS_TAB_LABEL).focused(true)),
+                WAIT_TIMEOUT
+            )
+
             // Explore the Categories tab
             pressDPadDown()
             waitForIdle()
             repeat(2) { pressDPadRight(); waitForIdle() }
 
             // Navigate to Movies tab
-            pressDPadUp()
-            waitForIdle()
-            pressDPadRight()
-            waitForIdle()
-            wait(
-                Until.findObject(By.text(MOVIES_TAB_LABEL).focused(true)),
-                WAIT_TIMEOUT
-            )
+//            pressDPadUp()
+//            waitForIdle()
+//            pressDPadRight()
+//            waitForIdle()
+//            wait(
+//                Until.findObject(By.text(MOVIES_TAB_LABEL).focused(true)),
+//                WAIT_TIMEOUT
+//            )
+
 
             // Explore the Movies tab
-            repeat(2) {
-                pressDPadDown()
-                waitForIdle()
-                repeat(4) { pressDPadRight(); waitForIdle() }
-                repeat(4) { pressDPadLeft(); waitForIdle() }
-                waitForIdle()
-            }
-
+//            repeat(2) {
+//                pressDPadDown()
+//                waitForIdle()
+//                repeat(4) { pressDPadRight(); waitForIdle() }
+//                repeat(4) { pressDPadLeft(); waitForIdle() }
+//                waitForIdle()
+//            }
+//
             // Navigate to Shows tab
             repeat(2) { pressDPadUp(); pressDPadRight(); waitForIdle() }
             wait(
@@ -103,28 +114,28 @@ class BaselineProfileGenerator {
                 repeat(4) { pressDPadLeft(); waitForIdle() }
                 waitForIdle()
             }
-
-            // Navigate to Favourites tab
-            repeat(2) { pressDPadUp(); waitForIdle() }
-            pressDPadRight()
-            wait(
-                Until.findObject(By.text(FAVOURITES_TAB_LABEL).focused(true)),
-                WAIT_TIMEOUT
-            )
+//
+//            // Navigate to Favourites tab
+//            repeat(2) { pressDPadUp(); waitForIdle() }
+//            pressDPadRight()
+//            wait(
+//                Until.findObject(By.text(FAVOURITES_TAB_LABEL).focused(true)),
+//                WAIT_TIMEOUT
+//            )
 
             // Explore the favourites tab
-            pressDPadDown()
-            waitForIdle()
-            pressDPadRight()
-            wait(
-                Until.findObject(By.text(TV_SHOWS_CHIP_LABEL).focused(true)),
-                WAIT_TIMEOUT
-            )
-            pressDPadCenter()
-            waitForIdle()
-            repeat(2) { pressDPadDown(); waitForIdle() }
-            pressDPadRight()
-            waitForIdle()
+//            pressDPadDown()
+//            waitForIdle()
+//            pressDPadRight()
+//            wait(
+//                Until.findObject(By.text(TV_SHOWS_CHIP_LABEL).focused(true)),
+//                WAIT_TIMEOUT
+//            )
+//            pressDPadCenter()
+//            waitForIdle()
+//            repeat(2) { pressDPadDown(); waitForIdle() }
+//            pressDPadRight()
+//            waitForIdle()
 
             // Navigate to Search tab
             repeat(3) { pressDPadUp(); waitForIdle() }
@@ -192,11 +203,12 @@ private const val INITIAL_WAIT_TIMEOUT = 2000L
 private const val WAIT_TIMEOUT = 1000L
 
 private const val PROFILE_BUTTON_DESCRIPTION = "User Profile"
-private const val HOME_TAB_LABEL = "Home"
+//private const val HOME_TAB_LABEL = "Home"
 private const val CATEGORIES_TAB_LABEL = "Categories"
-private const val MOVIES_TAB_LABEL = "Movies"
+//private const val MOVIES_TAB_LABEL = "Movies"
 private const val SHOWS_TAB_LABEL = "Shows"
-private const val FAVOURITES_TAB_LABEL = "Favourites"
+//private const val FAVOURITES_TAB_LABEL = "Favourites"
 private const val SEARCH_TAB_DESCRIPTION = "Dashboard Search"
-private const val TV_SHOWS_CHIP_LABEL = "TV Shows"
-private const val CAROUSEL_DESCRIPTION = "Carousel"
+//private const val TV_SHOWS_CHIP_LABEL = "TV Shows"
+//private const val CAROUSEL_DESCRIPTION = "Carousel"
+private const val CHANNELS_TAB_LABEL = "Channels"

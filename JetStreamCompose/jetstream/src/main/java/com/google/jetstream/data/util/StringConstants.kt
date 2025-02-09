@@ -39,6 +39,7 @@ object StringConstants {
         const val MostPopularTVShows = "movies.json"
         const val MovieCategories = "movieCategories.json"
         const val MovieCast = "movieCast.json"
+        const val ChannelList = "channels.json"
     }
 
     object Exceptions {

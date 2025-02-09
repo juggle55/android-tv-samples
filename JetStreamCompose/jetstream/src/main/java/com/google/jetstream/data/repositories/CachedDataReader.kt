@@ -16,7 +16,9 @@
 
 package com.google.jetstream.data.repositories
 
+import com.google.jetstream.data.entities.Channel
 import com.google.jetstream.data.entities.Movie
+import com.google.jetstream.data.models.ChannelResponseItem
 import com.google.jetstream.data.models.MovieCastResponseItem
 import com.google.jetstream.data.models.MovieCategoriesResponseItem
 import com.google.jetstream.data.models.MoviesResponseItem
@@ -71,5 +73,17 @@ internal suspend fun readMovieCategoryData(
 ): List<MovieCategoriesResponseItem> = withContext(dispatcher) {
     assetsReader.getJsonDataFromAsset(resourceId).map {
         Json.decodeFromString<List<MovieCategoriesResponseItem>>(it)
+    }.getOrDefault(emptyList())
+}
+
+internal typealias ChannelDataReader = CachedDataReader<Channel>
+
+internal suspend fun readChannelData(
+    assetsReader: AssetsReader,
+    resourceId: String,
+    dispatcher: CoroutineDispatcher = Dispatchers.IO
+): List<ChannelResponseItem> = withContext(dispatcher) {
+    assetsReader.getJsonDataFromAsset(resourceId).map {
+        Json.decodeFromString<List<ChannelResponseItem>>(it)
     }.getOrDefault(emptyList())
 }

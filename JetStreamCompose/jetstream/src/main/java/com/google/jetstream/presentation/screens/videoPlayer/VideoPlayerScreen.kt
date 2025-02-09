@@ -55,6 +55,7 @@ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.PlayerView
 import com.google.jetstream.data.entities.MovieDetails
+import com.google.jetstream.data.entities.Video
 import com.google.jetstream.data.util.StringConstants
 import com.google.jetstream.presentation.common.Error
 import com.google.jetstream.presentation.common.Loading
@@ -121,21 +122,22 @@ fun VideoPlayerScreenContent(movieDetails: MovieDetails, onBackPressed: () -> Un
     LaunchedEffect(exoPlayer, movieDetails) {
         exoPlayer.setMediaItem(
             MediaItem.Builder()
-                .setUri("movieDetails.videoUri")
-                .setSubtitleConfigurations(
-                    if (movieDetails.subtitleUri == null) {
-                        emptyList()
-                    } else {
-                        listOf(
-                            MediaItem.SubtitleConfiguration
-                                .Builder(Uri.parse(movieDetails.subtitleUri))
-                                .setMimeType("application/vtt")
-                                .setLanguage("en")
-                                .setSelectionFlags(C.SELECTION_FLAG_DEFAULT)
-                                .build()
-                        )
-                    }
-                ).build()
+                .setUri(movieDetails.videoUri)
+//                .setSubtitleConfigurations(
+//                    if (movieDetails.subtitleUri == null) {
+//                        emptyList()
+//                    } else {
+//                        listOf(
+//                            MediaItem.SubtitleConfiguration
+//                                .Builder(Uri.parse(movieDetails.subtitleUri))
+//                                .setMimeType("application/vtt")
+//                                .setLanguage("en")
+//                                .setSelectionFlags(C.SELECTION_FLAG_DEFAULT)
+//                                .build()
+//                        )
+//                    }
+//                ).build()
+            .build()
         )
         exoPlayer.prepare()
     }

@@ -19,13 +19,13 @@ package com.google.jetstream.data.entities
 import com.google.jetstream.data.models.MoviesResponseItem
 
 data class Movie(
-    val id: String,
-    val videoUri: String,
+    override val id: String,
+    override val videoUri: String,
     val subtitleUri: String?,
     val posterUri: String,
-    val name: String,
+    override val name: String,
     val description: String
-)
+) : Video
 
 fun MoviesResponseItem.toMovie(thumbnailType: ThumbnailType = ThumbnailType.Standard): Movie {
     val thumbnail = when (thumbnailType) {

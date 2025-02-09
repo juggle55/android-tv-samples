@@ -20,6 +20,7 @@ import com.google.jetstream.data.entities.MovieCategoryDetails
 import com.google.jetstream.data.entities.MovieCategoryList
 import com.google.jetstream.data.entities.MovieDetails
 import com.google.jetstream.data.entities.MovieList
+import com.google.jetstream.data.entities.ChannelList
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -37,4 +38,5 @@ interface MovieRepository {
     fun getTVShows(): Flow<MovieList>
     fun getBingeWatchDramas(): Flow<MovieList>
     fun getFavouriteMovies(): Flow<MovieList>
+    fun getChannels(): Flow<ChannelList>
 }

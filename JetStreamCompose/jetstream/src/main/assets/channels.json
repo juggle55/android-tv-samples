@@ -1,0 +1,122 @@
+{
+    "das_erste": {
+      "streamUrl": "https://daserste-live.ard-mcdn.de/daserste/live/hls/de/master.m3u8",
+      "name": "Das Erste"
+    },
+    "zdf": {
+      "streamUrl": "https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8",
+      "name": "ZDF"
+    },
+    "arte": {
+      "streamUrl": "https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8",
+      "name": "ARTE"
+    },
+    "dreisat": {
+      "streamUrl": "https://zdf-hls-18.akamaized.net/hls/live/2016501/dach/high/master.m3u8",
+      "name": "3sat"
+    },
+    "kika": {
+      "streamUrl": "https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8",
+      "name": "KiKA"
+    },
+    "phoenix": {
+      "streamUrl": "https://zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8",
+      "name": "phoenix"
+    },
+    "tagesschau24": {
+      "streamUrl": "https://tagesschau.akamaized.net/hls/live/2020117/tagesschau/tagesschau_3/master.m3u8",
+      "name": "tagesschau24"
+    },
+    "ard_alpha": {
+      "streamUrl": "https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8",
+      "name": "ARD-alpha"
+    },
+    "zdf_info": {
+      "streamUrl": "https://zdf-hls-17.akamaized.net/hls/live/2016500/de/high/master.m3u8",
+      "name": "ZDFinfo"
+    },
+    "zdf_neo": {
+      "streamUrl": "https://zdf-hls-16.akamaized.net/hls/live/2016499/de/high/master.m3u8",
+      "name": "ZDFneo"
+    },
+    "one": {
+      "streamUrl": "https://mcdn-one.ard.de/ardone/hls/master.m3u8",
+      "name": "ONE"
+    },
+    "br_nord": {
+      "streamUrl": "https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8",
+      "name": "BR Nord"
+    },
+    "br_sued": {
+      "streamUrl": "https://mcdn.br.de/br/fs/bfs_sued/hls/de/master.m3u8",
+      "name": "BR Süd"
+    },
+    "hr": {
+      "streamUrl": "https://hrhls.akamaized.net/hls/live/2024525/hrhls/index.m3u8",
+      "name": "HR"
+    },
+    "mdr_sachsen": {
+      "streamUrl": "https://mdrtvsnhls.akamaized.net/hls/live/2016928/mdrtvsn/master.m3u8",
+      "name": "MDR Sachsen"
+    },
+    "mdr_sachsen_anhalt": {
+      "streamUrl": "https://mdrtvsahls.akamaized.net/hls/live/2016879/mdrtvsa/master.m3u8",
+      "name": "MDR Sachsen-Anhalt"
+    },
+    "mdr_thueringen": {
+      "streamUrl": "https://mdrtvthhls.akamaized.net/hls/live/2016880/mdrtvth/master.m3u8",
+      "name": "MDR Thüringen"
+    },
+    "ndr_hh": {
+      "streamUrl": "https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_hh/master.m3u8",
+      "name": "NDR Hamburg"
+    },
+    "ndr_mv": {
+      "streamUrl": "https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_mv/master.m3u8",
+      "name": "NDR Mecklenburg-Vorpommern"
+    },
+    "ndr_nds": {
+      "streamUrl": "https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_nds/master.m3u8",
+      "name": "NRD Niedersachsen"
+    },
+    "ndr_sh": {
+      "streamUrl": "https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_sh/master.m3u8",
+      "name": "NDR Schleswig-Holstein"
+    },
+    "rbb_berlin": {
+      "streamUrl": "https://rbb-hls-berlin.akamaized.net/hls/live/2017824/rbb_berlin/index.m3u8",
+      "name": "rbb Fernsehen Berlin"
+    },
+    "rbb_brandenburg": {
+      "streamUrl": "https://rbb-hls-brandenburg.akamaized.net/hls/live/2017825/rbb_brandenburg/index.m3u8",
+      "name": "rbb Fernsehen Brandenburg"
+    },
+    "rb": {
+      "streamUrl": "https://rbhlslive.akamaized.net/hls/live/2020435/rbfs/master.m3u8",
+      "name": "Radio Bremen"
+    },
+    "sr": {
+      "streamUrl": "https://srfs.akamaized.net/hls/live/689649/srfsgeo/master.m3u8",
+      "name": "SR"
+    },
+    "swr_bw": {
+      "streamUrl": "https://swrbwd-hls.akamaized.net/hls/live/2018672/swrbwd/master.m3u8",
+      "name": "SWR Baden-Württemberg"
+    },
+    "swr_rp": {
+      "streamUrl": "https://swrrpd-hls.akamaized.net/hls/live/2018676/swrrpd/master.m3u8",
+      "name": "SWR Rheinland-Pfalz"
+    },
+    "wdr": {
+      "streamUrl": "https://mcdn.wdr.de/wdr/wdrfs/de/master.m3u8",
+      "name": "WDR"
+    },
+    "parlamentsfernsehen_1": {
+      "streamUrl": "https://bttv-live-z.r53.cdn.tv1.eu/13014bundestag-hk1/_definst_/live/video/hk1_de.smil/playlist.m3u8",
+      "name": "Parlaments­fern­sehen Kanal 1"
+    },
+    "parlamentsfernsehen_2": {
+      "streamUrl": "https://bttv-live-z.r53.cdn.tv1.eu/13014bundestag-hk2/_definst_/live/video/hk2_de.smil/playlist.m3u8",
+      "name": "Parlaments­fern­sehen Kanal 2"
+    }
+  }
