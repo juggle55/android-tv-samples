@@ -1,42 +1,92 @@
 [
-    {
-      "id": "das_erste",
-      "streamUrl": "https://daserste-live.ard-mcdn.de/daserste/live/hls/de/master.m3u8",
-      "name": "Das Erste"
-    },
-    {
-      "id": "zdf",
-      "streamUrl": "https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8",
-      "name": "ZDF"
-    },
-    {
-      "id": "arte",
-      "streamUrl": "https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8",
-      "name": "ARTE"
-    },
-    {
-      "id": "dreisat",
-      "streamUrl": "https://zdf-hls-18.akamaized.net/hls/live/2016501/dach/high/master.m3u8",
-      "name": "3sat"
-    },
-    {
-      "id": "kika",
-      "streamUrl": "https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8",
-      "name": "KiKA"
-    },
-    {
-      "id": "phoenix",
-      "streamUrl": "https://zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8",
-      "name": "phoenix"
-    },
-    {
-      "id": "ard_alpha",
-      "streamUrl": "https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8",
-      "name": "ARD-alpha"
-    },
-    {
-      "id": "zdf_info",
-      "streamUrl": "https://zdf-hls-17.akamaized.net/hls/live/2016500/de/high/master.m3u8",
-      "name": "ZDFinfo"
-    }
+  {
+    "id": "das_erste",
+    "streamUrl": "https://daserste-live.ard-mcdn.de/daserste/live/hls/de/master.m3u8",
+    "name": "Das Erste"
+  },
+  {
+    "id": "zdf",
+    "streamUrl": "https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8",
+    "name": "ZDF"
+  },
+  {
+    "id": "arte",
+    "streamUrl": "https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8",
+    "name": "ARTE"
+  },
+  {
+    "id": "dreisat",
+    "streamUrl": "https://zdf-hls-18.akamaized.net/hls/live/2016501/dach/high/master.m3u8",
+    "name": "3sat"
+  },
+  {
+    "id": "kika",
+    "streamUrl": "https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8",
+    "name": "KiKA"
+  },
+  {
+    "id": "phoenix",
+    "streamUrl": "https://zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8",
+    "name": "phoenix"
+  },
+  {
+    "id": "ard_alpha",
+    "streamUrl": "https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8",
+    "name": "ARD-alpha"
+  },
+  {
+    "id": "zdf_info",
+    "streamUrl": "https://zdf-hls-17.akamaized.net/hls/live/2016500/de/high/master.m3u8",
+    "name": "ZDFinfo"
+  },
+  {
+    "id": "zdf_neo",
+    "streamUrl": "https://zdf-hls-16.akamaized.net/hls/live/2016499/de/high/master.m3u8",
+    "name": "ZDFneo"
+  },
+  {
+    "id": "one",
+    "streamUrl": "https://mcdn-one.ard.de/ardone/hls/master.m3u8",
+    "name": "ONE"
+  },
+  {
+    "id": "br_nord",
+    "streamUrl": "https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8",
+    "name": "BR Nord"
+  },
+  {
+    "id": "hr",
+    "streamUrl": "https://hrhls.akamaized.net/hls/live/2024525/hrhls/index.m3u8",
+    "name": "HR"
+  },
+  {
+    "id": "mdr_sachsen",
+    "streamUrl": "https://mdrtvsnhls.akamaized.net/hls/live/2016928/mdrtvsn/master.m3u8",
+    "name": "MDR Sachsen"
+  },
+  {
+    "id": "ndr_hh",
+    "streamUrl": "https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_hh/master.m3u8",
+    "name": "NDR Hamburg"
+  },
+  {
+    "id": "rbb_berlin",
+    "streamUrl": "https://rbb-hls-berlin.akamaized.net/hls/live/2017824/rbb_berlin/index.m3u8",
+    "name": "rbb Fernsehen Berlin"
+  },
+  {
+    "id": "sr",
+    "streamUrl": "https://srfs.akamaized.net/hls/live/689649/srfsgeo/master.m3u8",
+    "name": "SR"
+  },
+  {
+    "id": "swr_rp",
+    "streamUrl": "https://swrrpd-hls.akamaized.net/hls/live/2018676/swrrpd/master.m3u8",
+    "name": "SWR Rheinland-Pfalz"
+  },
+  {
+    "id": "wdr",
+    "streamUrl": "https://mcdn.wdr.de/wdr/wdrfs/de/master.m3u8",
+    "name": "WDR"
+  }
 ]
