@@ -62,6 +62,7 @@ import com.google.jetstream.data.entities.Video
 import com.google.jetstream.presentation.screens.Screens
 import com.google.jetstream.presentation.screens.categories.CategoriesScreen
 import com.google.jetstream.presentation.screens.channels.ChannelsScreen
+import com.google.jetstream.presentation.screens.home.HomeScreen
 import com.google.jetstream.presentation.screens.profile.ProfileScreen
 import com.google.jetstream.presentation.screens.search.SearchScreen
 import com.google.jetstream.presentation.screens.shows.ShowsScreen
@@ -237,16 +238,16 @@ private fun Body(
         composable(Screens.Profile()) {
             ProfileScreen()
         }
-//        composable(Screens.Home()) {
-//            HomeScreen(
-//                onMovieClick = { selectedMovie ->
-//                    openMovieDetailsScreen(selectedMovie.id)
-//                },
-//                goToVideoPlayer = openVideoPlayer,
-//                onScroll = updateTopBarVisibility,
-//                isTopBarVisible = isTopBarVisible
-//            )
-//        }
+        composable(Screens.Home()) {
+            HomeScreen(
+                onMovieClick = { selectedMovie ->
+                    openMovieDetailsScreen(selectedMovie.id)
+                },
+                goToVideoPlayer = openVideoPlayer,
+                onScroll = updateTopBarVisibility,
+                isTopBarVisible = isTopBarVisible
+            )
+        }
         composable(Screens.Channels()) {
             ChannelsScreen(
                 goToVideoPlayer = {channel -> openVideoPlayer(channel.id)},

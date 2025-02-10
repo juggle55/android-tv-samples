@@ -29,7 +29,7 @@ enum class Screens(
     val tabIcon: ImageVector? = null
 ) {
     Profile,
-//    Home(isTabItem = true),
+    Home(isTabItem = true),
     Channels(isTabItem = true),
     Categories(isTabItem = true),
 //    Movies(isTabItem = true),
