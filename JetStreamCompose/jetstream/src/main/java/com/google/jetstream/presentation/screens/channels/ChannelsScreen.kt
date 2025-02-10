@@ -1,5 +1,6 @@
 package com.google.jetstream.presentation.screens.channels
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Box
@@ -34,16 +35,13 @@ import com.google.jetstream.data.entities.Channel
 import com.google.jetstream.data.entities.ChannelList
 import com.google.jetstream.presentation.common.Loading
 import com.google.jetstream.presentation.common.MovieCard
-import com.google.jetstream.presentation.screens.channels.ChannelsScreenUiState
-import com.google.jetstream.presentation.screens.channels.ChannelsScreenViewModel
 import com.google.jetstream.presentation.screens.dashboard.rememberChildPadding
-import com.google.jetstream.presentation.screens.videoPlayer.VideoPlayerScreen
 import com.google.jetstream.presentation.utils.GradientBg
 
 @Composable
 fun ChannelsScreen(
     gridColumns: Int = 4,
-    goToVideoPlayer: (channel: Channel) -> Unit,
+    onChannelClick: (channel: Channel) -> Unit,
     onScroll: (isTopBarVisible: Boolean) -> Unit,
     channelsScreenViewModel: ChannelsScreenViewModel = hiltViewModel()
 ) {
@@ -59,7 +57,7 @@ fun ChannelsScreen(
             Catalog(
                 gridColumns = gridColumns,
                 channels = s.channelList,
-                goToVideoPlayer = goToVideoPlayer,
+                onChannelClick = onChannelClick,
                 onScroll = onScroll,
                 modifier = Modifier.fillMaxSize()
             )
@@ -73,7 +71,7 @@ private fun Catalog(
     channels: ChannelList,
     modifier: Modifier = Modifier,
     gridColumns: Int = 4,
-    goToVideoPlayer: (channel: Channel) -> Unit,
+    onChannelClick: (channel: Channel) -> Unit,
     onScroll: (isTopBarVisible: Boolean) -> Unit,
 ) {
     val childPadding = rememberChildPadding()
@@ -104,7 +102,7 @@ private fun Catalog(
                 var isFocused by remember { mutableStateOf(false) }
                 MovieCard(
                     onClick = {
-                        goToVideoPlayer(channel)
+                        onChannelClick(channel)
                     },
                     modifier = Modifier
                         .padding(8.dp)
