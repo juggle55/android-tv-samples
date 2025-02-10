@@ -56,9 +56,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.jetstream.data.entities.Channel
-import com.google.jetstream.data.entities.Movie
-import com.google.jetstream.data.entities.Video
 import com.google.jetstream.presentation.screens.Screens
 import com.google.jetstream.presentation.screens.categories.CategoriesScreen
 import com.google.jetstream.presentation.screens.channels.ChannelsScreen
@@ -194,7 +191,7 @@ fun DashboardScreen(
             updateTopBarVisibility = { isTopBarVisible = it },
             isTopBarVisible = isTopBarVisible,
             navController = navController,
-            modifier = Modifier.offset(y = navHostTopPaddingDp),
+            modifier = Modifier.offset(y = navHostTopPaddingDp)
         )
     }
 }
@@ -227,12 +224,12 @@ private fun Body(
     updateTopBarVisibility: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    isTopBarVisible: Boolean = true,
+    isTopBarVisible: Boolean = true
 ) =
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Screens.Categories(),
+        startDestination = Screens.Channels(),
 //        startDestination = Screens.Home(),
     ) {
         composable(Screens.Profile()) {
@@ -250,7 +247,7 @@ private fun Body(
         }
         composable(Screens.Channels()) {
             ChannelsScreen(
-                goToVideoPlayer = {channel -> openVideoPlayer(channel.id)},
+                onChannelClick = { channel -> openVideoPlayer(channel.id) },
                 onScroll = updateTopBarVisibility
             )
         }
