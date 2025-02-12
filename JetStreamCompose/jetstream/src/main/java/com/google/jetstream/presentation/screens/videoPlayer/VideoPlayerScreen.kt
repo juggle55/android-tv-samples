@@ -21,18 +21,22 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesomeMotion
 import androidx.compose.material.icons.filled.ClosedCaption
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +45,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
@@ -97,9 +104,11 @@ fun VideoPlayerScreen(
         is VideoPlayerScreenUiState.Loading -> {
             Loading(modifier = Modifier.fillMaxSize())
         }
+
         is VideoPlayerScreenUiState.Error -> {
             Error(modifier = Modifier.fillMaxSize())
         }
+
         is VideoPlayerScreenUiState.Done -> {
             VideoPlayerScreenContent(
                 video = s.video,
@@ -117,6 +126,7 @@ fun VideoPlayerScreenContent(video: Video, onBackPressed: () -> Unit) {
 
     // TODO: Move to ViewModel for better reuse
     val exoPlayer = rememberExoPlayer(context)
+
     LaunchedEffect(exoPlayer, video) {
         exoPlayer.setMediaItem(
             MediaItem.Builder()
@@ -135,7 +145,7 @@ fun VideoPlayerScreenContent(video: Video, onBackPressed: () -> Unit) {
 //                        )
 //                    }
 //                ).build()
-            .build()
+                .build()
         )
         exoPlayer.prepare()
     }
@@ -151,9 +161,14 @@ fun VideoPlayerScreenContent(video: Video, onBackPressed: () -> Unit) {
         }
     }
 
+
     BackHandler(onBack = onBackPressed)
 
     val pulseState = rememberVideoPlayerPulseState()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var lifecycle by remember {
+        mutableStateOf(Lifecycle.Event.ON_CREATE)
+    }
 
     Box(
         Modifier
@@ -168,10 +183,30 @@ fun VideoPlayerScreenContent(video: Video, onBackPressed: () -> Unit) {
             factory = {
                 PlayerView(context).apply { useController = false }
             },
-            update = { it.player = exoPlayer },
-            onRelease = { exoPlayer.release() }
-        )
+            update = {
+                it.player = exoPlayer
+                when (lifecycle) {
+                    Lifecycle.Event.ON_STOP -> {
+                        it.onPause()
+                        it.player?.pause()
+                    }
 
+                    else -> Unit
+                }
+            },
+            onRelease = { exoPlayer.release() },
+
+            )
+        DisposableEffect(lifecycleOwner) {
+            val observer = LifecycleEventObserver { _, event ->
+                lifecycle = event
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+            }
+        }
         val focusRequester = remember { FocusRequester() }
         VideoPlayerOverlay(
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -192,6 +227,8 @@ fun VideoPlayerScreenContent(video: Video, onBackPressed: () -> Unit) {
             }
         )
     }
+
+
 }
 
 @Composable
@@ -347,5 +384,5 @@ private fun Modifier.dPadEvents(
     onEnter = {
         exoPlayer.pause()
         videoPlayerState.showControls()
-    }
+    },
 )

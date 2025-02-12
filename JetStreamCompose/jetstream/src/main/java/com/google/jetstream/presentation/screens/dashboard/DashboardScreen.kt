@@ -248,7 +248,7 @@ private fun Body(
         composable(Screens.Channels()) {
             ChannelsScreen(
                 onChannelClick = { channel -> openVideoPlayer(channel.id) },
-                onScroll = updateTopBarVisibility
+               // onScroll = updateTopBarVisibility
             )
         }
 

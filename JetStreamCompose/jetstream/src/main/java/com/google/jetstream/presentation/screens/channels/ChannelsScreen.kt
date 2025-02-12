@@ -120,7 +120,6 @@ private fun Catalog(
                             if(isItemToFocus) {
                                 focusRequester.requestFocus()
                             }
-
                         }
 
                 ) {

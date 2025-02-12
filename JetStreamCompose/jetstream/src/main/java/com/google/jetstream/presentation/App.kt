@@ -16,114 +16,164 @@
 
 package com.google.jetstream.presentation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.tv.material3.DrawerValue
+import androidx.tv.material3.ModalNavigationDrawer
+import androidx.tv.material3.rememberDrawerState
 import com.google.jetstream.presentation.screens.Screens
 import com.google.jetstream.presentation.screens.categories.CategoryMovieListScreen
+import com.google.jetstream.presentation.screens.channels.ChannelsScreen
 import com.google.jetstream.presentation.screens.dashboard.DashboardScreen
 import com.google.jetstream.presentation.screens.movies.MovieDetailsScreen
+import com.google.jetstream.presentation.screens.navigation.NavigationItem
 import com.google.jetstream.presentation.screens.videoPlayer.VideoPlayerScreen
 
 @Composable
 fun App(
+    modifier: Modifier = Modifier,
     onBackPressed: () -> Unit
 ) {
 
     val navController = rememberNavController()
     var isComingBackFromDifferentScreen by remember { mutableStateOf(false) }
-
-    NavHost(
-        navController = navController,
-        startDestination = Screens.Dashboard(),
-        builder = {
-            composable(
-                route = Screens.CategoryMovieList(),
-                arguments = listOf(
-                    navArgument(CategoryMovieListScreen.CategoryIdBundleKey) {
-                        type = NavType.StringType
-                    }
-                )
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    ModalNavigationDrawer (
+        modifier = modifier.background(Color.Black),
+        drawerState = drawerState,
+        drawerContent = {
+            Column(
+                Modifier
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center
             ) {
-                CategoryMovieListScreen(
-                    onBackPressed = {
-                        if (navController.navigateUp()) {
-                            isComingBackFromDifferentScreen = true
-                        }
-                    },
-                    onMovieSelected = { movie ->
-                        navController.navigate(
-                            Screens.MovieDetails.withArgs(movie.id)
-                        )
-                    }
-                )
-            }
-            composable(
-                route = Screens.MovieDetails(),
-                arguments = listOf(
-                    navArgument(MovieDetailsScreen.MovieIdBundleKey) {
-                        type = NavType.StringType
-                    }
-                )
-            ) {
-                MovieDetailsScreen(
-                    goToMoviePlayer = {
-                        navController.navigate(Screens.VideoPlayer())
-                    },
-                    refreshScreenWithNewMovie = { movie ->
-                        navController.navigate(
-                            Screens.MovieDetails.withArgs(movie.id)
-                        ) {
-                            popUpTo(Screens.MovieDetails()) {
-                                inclusive = true
-                            }
-                        }
-                    },
-                    onBackPressed = {
-                        if (navController.navigateUp()) {
-                            isComingBackFromDifferentScreen = true
-                        }
-                    }
-                )
-            }
-            composable(route = Screens.Dashboard()) {
-                DashboardScreen(
-                    openCategoryMovieList = { categoryId ->
-                        navController.navigate(
-                            Screens.CategoryMovieList.withArgs(categoryId)
-                        )
-                    },
-                    openMovieDetailsScreen = { movieId ->
-                        navController.navigate(
-                            Screens.MovieDetails.withArgs(movieId)
-                        )
-                    },
-                    openVideoPlayer = { videoId ->
-                        navController.navigate(Screens.VideoPlayer.withArgs(videoId))
-                    },
-                    onBackPressed = onBackPressed,
-                    isComingBackFromDifferentScreen = isComingBackFromDifferentScreen,
-                    resetIsComingBackFromDifferentScreen = {
-                        isComingBackFromDifferentScreen = false
-                    }
-                )
-            }
-            composable(route = Screens.VideoPlayer()) {
-                VideoPlayerScreen(
-                    onBackPressed = {
-                        if (navController.navigateUp()) {
-                            isComingBackFromDifferentScreen = true
-                        }
-                    }
-                )
+                NavigationItem(it, Icons.Default.Home, "Home") {
+                    navController.navigate(Screens.Dashboard())
+                }
+                NavigationItem(it, Icons.Default.Tv, "Channels") {
+                    navController.navigate(Screens.Channels())
+                }
+                NavigationItem(it, Icons.Default.Settings, "Settings") {
+                    navController.navigate(Screens.Profile())
+                }
             }
         }
-    )
+    ) {
+        NavHost(
+            navController = navController,
+            startDestination = Screens.Dashboard(),
+            builder = {
+                composable(
+                    route = Screens.CategoryMovieList(),
+                    arguments = listOf(
+                        navArgument(CategoryMovieListScreen.CategoryIdBundleKey) {
+                            type = NavType.StringType
+                        }
+                    )
+                ) {
+                    CategoryMovieListScreen(
+                        onBackPressed = {
+                            if (navController.navigateUp()) {
+                                isComingBackFromDifferentScreen = true
+                            }
+                        },
+                        onMovieSelected = { movie ->
+                            navController.navigate(
+                                Screens.MovieDetails.withArgs(movie.id)
+                            )
+                        }
+                    )
+                }
+                composable(
+                    route = Screens.MovieDetails(),
+                    arguments = listOf(
+                        navArgument(MovieDetailsScreen.MovieIdBundleKey) {
+                            type = NavType.StringType
+                        }
+                    )
+                ) {
+                    MovieDetailsScreen(
+                        goToMoviePlayer = {
+                            navController.navigate(Screens.VideoPlayer())
+                        },
+                        refreshScreenWithNewMovie = { movie ->
+                            navController.navigate(
+                                Screens.MovieDetails.withArgs(movie.id)
+                            ) {
+                                popUpTo(Screens.MovieDetails()) {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        onBackPressed = {
+                            if (navController.navigateUp()) {
+                                isComingBackFromDifferentScreen = true
+                            }
+                        }
+                    )
+                }
+                composable(route = Screens.Dashboard()) {
+                    DashboardScreen(
+                        openCategoryMovieList = { categoryId ->
+                            navController.navigate(
+                                Screens.CategoryMovieList.withArgs(categoryId)
+                            )
+                        },
+                        openMovieDetailsScreen = { movieId ->
+                            navController.navigate(
+                                Screens.MovieDetails.withArgs(movieId)
+                            )
+                        },
+                        openVideoPlayer = { videoId ->
+                            navController.navigate(Screens.VideoPlayer.withArgs(videoId))
+                        },
+                        onBackPressed = onBackPressed,
+                        isComingBackFromDifferentScreen = isComingBackFromDifferentScreen,
+                        resetIsComingBackFromDifferentScreen = {
+                            isComingBackFromDifferentScreen = false
+                        }
+                    )
+                }
+                composable(route = Screens.VideoPlayer()) {
+                    VideoPlayerScreen(
+                        onBackPressed = {
+                            if (navController.navigateUp()) {
+                                isComingBackFromDifferentScreen = true
+                                //navController.popBackStack()
+                            }
+                        }
+                    )
+                }
+                composable(Screens.Channels()) {
+                    ChannelsScreen(
+                        onChannelClick = { channel ->
+                            navController.navigate(
+                                Screens.VideoPlayer.withArgs(
+                                    channel.id
+                                )
+                            )
+                        },
+                    )
+                }
+            }
+        )
+    }
 }
