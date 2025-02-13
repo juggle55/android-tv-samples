@@ -16,67 +16,40 @@
 
 package com.google.jetstream.presentation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Tv
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.tv.material3.DrawerValue
-import androidx.tv.material3.ModalNavigationDrawer
-import androidx.tv.material3.rememberDrawerState
 import com.google.jetstream.presentation.screens.Screens
 import com.google.jetstream.presentation.screens.categories.CategoryMovieListScreen
 import com.google.jetstream.presentation.screens.channels.ChannelsScreen
 import com.google.jetstream.presentation.screens.dashboard.DashboardScreen
 import com.google.jetstream.presentation.screens.movies.MovieDetailsScreen
-import com.google.jetstream.presentation.screens.navigation.NavigationItem
+import com.google.jetstream.presentation.screens.navigation.NavigationDrawerSheet
 import com.google.jetstream.presentation.screens.videoPlayer.VideoPlayerScreen
 
 @Composable
 fun App(
-    modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    navController: NavHostController = rememberNavController(),
 ) {
-
-    val navController = rememberNavController()
     var isComingBackFromDifferentScreen by remember { mutableStateOf(false) }
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    ModalNavigationDrawer (
-        modifier = modifier.background(Color.Black),
-        drawerState = drawerState,
-        drawerContent = {
-            Column(
-                Modifier
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.Center
-            ) {
-                NavigationItem(it, Icons.Default.Home, "Home") {
-                    navController.navigate(Screens.Dashboard())
-                }
-                NavigationItem(it, Icons.Default.Tv, "Channels") {
-                    navController.navigate(Screens.Channels())
-                }
-                NavigationItem(it, Icons.Default.Settings, "Settings") {
-                    navController.navigate(Screens.Profile())
-                }
-            }
-        }
-    ) {
+
+    val closeDrawerWidth = 22.dp
+
+    NavigationDrawerSheet(
+        navController = navController,
+        content = {
         NavHost(
             navController = navController,
             startDestination = Screens.Dashboard(),
@@ -173,7 +146,8 @@ fun App(
                         },
                     )
                 }
-            }
+            },
+            modifier = Modifier.padding(start = closeDrawerWidth)
         )
-    }
+    })
 }
